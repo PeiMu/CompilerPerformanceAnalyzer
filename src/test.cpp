@@ -56,12 +56,12 @@ int main(int argc, char** argv) {
     std::cout << "start compare:" << std::endl;
 //    std::string diffCmd = "diff -y " + cwd + "/ir_files" + "/" + before_opt
 //            + " "  + cwd + "/ir_files" + "/" + after_opt;
-    std::string diffCmd = "git diff " + cwd + "/src/ir_files" + "/" + before_opt + " " +
-            cwd + "/src/ir_files" + "/" + after_opt + " 2>&1|tee" + " " + cwd + "/src/test_diff.js";
+    std::string diffCmd = "git diff " + cwd + "/src/ir_files" + "/" + before_opt
+            + " 2>&1|tee" + " " + cwd + "/src/config.js";
     system(diffCmd.c_str());
 
     // add js head and tail
-    std::ifstream testDiff_Js(cwd + "/src/test_diff.js");
+    std::ifstream testDiff_Js(cwd + "/src/config.js");
     if (!testDiff_Js.is_open()) {
         std::cout << "open after test_diff.js file failed" << std::endl;
         assert(false);
@@ -73,9 +73,9 @@ int main(int argc, char** argv) {
     testDiff_Js.close();
     std::string configHead = "export const diffStr = ";
     diffJs = configHead + "'" + diffJs + "';";
-    std::ofstream testDiffWrite(cwd + "/src/test_diff.js");
+    std::ofstream testDiffWrite(cwd + "/src/config.js");
     if (!testDiffWrite.is_open()) {
-        std::cout << "open after test_diff.js file failed" << std::endl;
+        std::cout << "open after config.js file failed" << std::endl;
         assert(false);
     }
     testDiffWrite << diffJs << std::endl;
